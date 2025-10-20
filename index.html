@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kartu Ucapan untuk Afyani</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 15px;
+        }
+
+        /* Background dengan efek floating */
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.2);
+            animation: floatAround 15s infinite linear;
+        }
+
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100px, 100px) rotate(360deg); }
+        }
+
+        .card-container {
+            perspective: 1500px;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+
+        .card {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+        .card.open {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-inside {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 25px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .card-front {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ff6b6b);
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            color: white;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+            animation: pulse 2s infinite;
+            line-height: 1.2;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        /* BUNGA TULIP YANG SANGAT BAGUS */
+        .tulip-bouquet {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .tulip {
+            position: relative;
+            width: 80px;
+            height: 150px;
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        .tulip:nth-child(1) { animation-delay: 0s; }
+        .tulip:nth-child(2) { animation-delay: 0.5s; }
+        .tulip:nth-child(3) { animation-delay: 1s; }
+
+        @keyframes sway {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-5px) rotate(2deg); }
+            75% { transform: translateY(3px) rotate(-2deg); }
+        }
+
+        .stem {
+            width: 6px;
+            height: 80px;
+            background: linear-gradient(to right, #2e7d32, #4caf50, #66bb6a);
+            margin: 0 auto;
+            border-radius: 3px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 
+                inset 0 0 10px rgba(0, 0, 0, 0.1),
+                0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .leaf {
+            position: absolute;
+            width: 18px;
+            height: 35px;
+            background: linear-gradient(to bottom, #66bb6a, #4caf50);
+            border-radius: 0 15px 0 15px;
+            top: 40px;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaf.left {
+            left: 12px;
+            transform: rotate(-25deg);
+        }
+
+        .leaf.right {
+            right: 12px;
+            transform: rotate(25deg) scaleX(-1);
+        }
+
+        .flower {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            z-index: 3;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        .petal {
+            position: absolute;
+            width: 35px;
+            height: 45px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform-origin: bottom center;
+            box-shadow: 
+                inset 0 0 15px rgba(255, 255, 255, 0.4),
+                0 3px 10px rgba(0, 0, 0, 0.2);
+            animation: petalGlow 3s ease-in-out infinite;
+        }
+
+        /* Variasi warna untuk setiap bunga */
+        .tulip:nth-child(1) .petal { 
+            background: linear-gradient(135deg, #ff5252, #ff6b6b, #ff8e8e);
+            border: 1px solid rgba(255, 82, 82, 0.4);
+        }
+        .tulip:nth-child(2) .petal { 
+            background: linear-gradient(135deg, #ff9800, #ffa726, #ffb74d);
+            border: 1px solid rgba(255, 152, 0, 0.4);
+        }
+        .tulip:nth-child(3) .petal { 
+            background: linear-gradient(135deg, #ab47bc, #ce93d8, #e1bee7);
+            border: 1px solid rgba(171, 71, 188, 0.4);
+        }
+
+        .petal:nth-child(1) { transform: rotate(0deg); top: 8px; animation-delay: 0s; }
+        .petal:nth-child(2) { transform: rotate(90deg); top: 8px; animation-delay: 0.3s; }
+        .petal:nth-child(3) { transform: rotate(45deg); top: 3px; animation-delay: 0.6s; }
+        .petal:nth-child(4) { transform: rotate(135deg); top: 3px; animation-delay: 0.9s; }
+
+        @keyframes petalGlow {
+            0%, 100% { 
+                filter: brightness(1) saturate(1);
+                transform: rotate(var(--rotate, 0deg)) scale(1);
+            }
+            50% { 
+                filter: brightness(1.2) saturate(1.3);
+                transform: rotate(var(--rotate, 0deg)) scale(1.05);
+            }
+        }
+
+        /* Bunga tulip mengambang di background */
+        .floating-tulips {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .floating-tulip {
+            position: absolute;
+            width: 40px;
+            height: 70px;
+            animation: floatTulip 8s ease-in-out infinite;
+            opacity: 0.7;
+            filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .floating-tulip .mini-petal {
+            position: absolute;
+            width: 20px;
+            height: 25px;
+            background: linear-gradient(135deg, var(--color1), var(--color2));
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.3);
+        }
+
+        .floating-tulip .mini-stem {
+            width: 3px;
+            height: 30px;
+            background: #4caf50;
+            position: absolute;
+            bottom: -15px;
+            left: 18px;
+            border-radius: 2px;
+        }
+
+        .floating-tulip:nth-child(1) {
+            --color1: #ff6b6b;
+            --color2: #ff5252;
+            top: 10%;
+            left: 8%;
+            animation-delay: 0s;
+        }
+        .floating-tulip:nth-child(2) {
+            --color1: #ffa726;
+            --color2: #ff9800;
+            top: 20%;
+            right: 8%;
+            animation-delay: 1s;
+        }
+        .floating-tulip:nth-child(3) {
+            --color1: #ab47bc;
+            --color2: #8e24aa;
+            bottom: 25%;
+            left: 8%;
+            animation-delay: 2s;
+        }
+        .floating-tulip:nth-child(4) {
+            --color1: #42a5f5;
+            --color2: #2196f3;
+            bottom: 15%;
+            right: 8%;
+            animation-delay: 3s;
+        }
+
+        @keyframes floatTulip {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            25% {
+                transform: translateY(-15px) rotate(5deg) scale(1.05);
+            }
+            50% {
+                transform: translateY(-8px) rotate(-3deg) scale(0.95);
+            }
+            75% {
+                transform: translateY(-12px) rotate(2deg) scale(1.02);
+            }
+        }
+
+        .instruction {
+            margin-top: 15px;
+            font-size: 1em;
+            opacity: 0.9;
+            animation: blink 2s infinite;
+            line-height: 1.4;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* Sisi dalam kartu */
+        .card-inside {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            color: #555;
+            transform: rotateY(180deg);
+            justify-content: space-between;
+        }
+
+        .message-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .message {
+            font-size: 1em;
+            line-height: 1.6;
+            margin: 12px 0;
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        .message:nth-child(1) { animation-delay: 0.3s; }
+        .message:nth-child(2) { animation-delay: 0.8s; }
+        .message:nth-child(3) { animation-delay: 1.3s; }
+        .message:nth-child(4) { animation-delay: 1.8s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .signature {
+            margin-top: 20px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8em;
+            color: #ff6b6b;
+            align-self: flex-end;
+            opacity: 0;
+            animation: fadeInUp 0.8s 2.3s forwards;
+        }
+
+        /* Hati beterbangan */
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 0;
+            opacity: 0;
+            animation: heartFloat 4s ease-in forwards;
+        }
+
+        @keyframes heartFloat {
+            0% {
+                opacity: 0;
+                transform: translateY(0) rotate(0deg);
+                font-size: 0px;
+            }
+            10% {
+                opacity: 1;
+                font-size: 18px;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) rotate(360deg);
+                font-size: 22px;
+            }
+        }
+
+        /* Media Query untuk HP */
+        @media (max-width: 480px) {
+            .card {
+                height: 450px;
+            }
+            
+            .card-front, .card-inside {
+                padding: 25px 20px;
+            }
+            
+            .title {
+                font-size: 2.2em;
+                margin-bottom: 12px;
+            }
+            
+            .tulip-bouquet {
+                gap: 15px;
+                margin: 15px 0;
+            }
+            
+            .tulip {
+                width: 70px;
+                height: 130px;
+            }
+            
+            .instruction {
+                font-size: 0.9em;
+                margin-top: 12px;
+            }
+            
+            .message {
+                font-size: 0.95em;
+                margin: 10px 0;
+            }
+            
+            .signature {
+                font-size: 1.6em;
+                margin-top: 15px;
+            }
+            
+            .floating-tulip {
+                transform: scale(0.8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background dengan hati- hati kecil -->
+    <div class="floating-bg" id="floatingBg"></div>
+
+    <!-- Bunga tulip yang mengambang di sekitar kartu -->
+    <div class="floating-tulips">
+        <div class="floating-tulip">
+            <div class="mini-petal" style="transform: rotate(0deg); top: 5px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(90deg); top: 5px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(45deg); top: 2px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(135deg); top: 2px; left: 10px;"></div>
+            <div class="mini-stem"></div>
+        </div>
+        <div class="floating-tulip">
+            <div class="mini-petal" style="transform: rotate(0deg); top: 5px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(90deg); top: 5px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(45deg); top: 2px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(135deg); top: 2px; left: 10px;"></div>
+            <div class="mini-stem"></div>
+        </div>
+        <div class="floating-tulip">
+            <div class="mini-petal" style="transform: rotate(0deg); top: 5px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(90deg); top: 5px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(45deg); top: 2px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(135deg); top: 2px; left: 10px;"></div>
+            <div class="mini-stem"></div>
+        </div>
+        <div class="floating-tulip">
+            <div class="mini-petal" style="transform: rotate(0deg); top: 5px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(90deg); top: 5px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(45deg); top: 2px; left: 10px;"></div>
+            <div class="mini-petal" style="transform: rotate(135deg); top: 2px; left: 10px;"></div>
+            <div class="mini-stem"></div>
+        </div>
+    </div>
+
+    <!-- Container kartu utama -->
+    <div class="card-container">
+        <div class="card" id="card">
+            <!-- Sisi depan kartu -->
+            <div class="card-front">
+                <h1 class="title">Untuk Afyani 💖</h1>
+                
+                <!-- Bouquet bunga tulip yang indah -->
+                <div class="tulip-bouquet">
+                    <div class="tulip">
+                        <div class="stem"></div>
+                        <div class="leaf left"></div>
+                        <div class="leaf right"></div>
+                        <div class="flower">
+                            <div class="petal"></div>
+                            <div class="petal"></div>
+                            <div class="petal"></div>
+                            <div class="petal"></div>
+                        </div>
+                    </div>
+                    <div class="tulip">
+                        <div class="stem"></div>
+                        <div class="leaf left"></div>
+                        <div class="leaf right"></div>
+                        <div class="flower">
+                            <div class="petal"></div>
+                            <div class="petal"></div>
+                            <div class="petal"></div>
+                            <div class="petal"></div>
+                        </div>
+                    </div>
+                    <div class="tulip">
+                        <div class="stem"></div>
+                        <div class="leaf left"></div>
+                        <div class="leaf right"></div>
+                        <div class="flower">
+                            <div class="petal"></div>
+                            <div class="petal"></div>
+                            <div class="petal"></div>
+                            <div class="petal"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="instruction">Klik kartu untuk membuka pesan spesial 🥰</p>
+            </div>
+
+            <!-- Sisi dalam kartu -->
+            <div class="card-inside">
+                <div class="message-container">
+                    <p class="message">Hai Afyani...</p>
+                    <p class="message">Semangat ya, jangan terlalu berlarut</p>
+                    <p class="message">Yang sudah berlalu biarin berlalu aja</p>
+                    <p class="message">Sekarang fokus kedepan ya, gausah dipikirin</p>
+                    <p class="message">Aku pasti support apapun yang kamu lakuin</p>
+                    <p class="message">Semangat ya! 💫</p>
+                    
+                    <p class="signature">- Yang selalu support kamu -</p>
+                </div>
+
+                <div class="hearts" id="hearts"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Inisialisasi
+        const card = document.getElementById('card');
+
+        // Buka/tutup kartu
+        card.addEventListener('click', function() {
+            this.classList.toggle('open');
+            if (this.classList.contains('open')) {
+                createHearts(20);
+            }
+        });
+
+        // Buat hati beterbangan
+        function createHearts(count) {
+            const heartsContainer = document.getElementById('hearts');
+            heartsContainer.innerHTML = '';
+            
+            for (let i = 0; i < count; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heart.style.color = getRandomColor();
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => {
+                    if (heart.parentNode === heartsContainer) {
+                        heart.remove();
+                    }
+                }, 4000);
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#ff6b6b', '#ffa726', '#ab47bc', '#42a5f5', '#66bb6a', '#ff4081'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Background hearts
+        const floatingBg = document.getElementById('floatingBg');
+        for (let i = 0; i < 25; i++) {
+            const element = document.createElement('div');
+            element.className = 'floating-heart';
+            element.innerHTML = '❤';
+            element.style.left = Math.random() * 100 + '%';
+            element.style.top = Math.random() * 100 + '%';
+            element.style.animationDelay = Math.random() * 20 + 's';
+            element.style.fontSize = (Math.random() * 15 + 8) + 'px';
+            floatingBg.appendChild(element);
+        }
+
+        // Animasi pesan
+        const messages = document.querySelectorAll('.message');
+        const signature = document.querySelector('.signature');
+        
+        setTimeout(() => {
+            messages.forEach((msg, index) => {
+                setTimeout(() => {
+                    msg.style.opacity = 1;
+                    msg.style.transform = 'translateY(0)';
+                }, index * 500 + 300);
+            });
+            
+            setTimeout(() => {
+                signature.style.opacity = 1;
+                signature.style.transform = 'translateY(0)';
+            }, 2800);
+        }, 500);
+
+        // Tambah animasi untuk kelopak bunga
+        const petals = document.querySelectorAll('.petal');
+        petals.forEach((petal, index) => {
+            petal.style.setProperty('--rotate', `${index * 90}deg`);
+        });
+    </script>
+</body>
+</html>
